@@ -82,6 +82,7 @@ call dein#add('othree/javascript-libraries-syntax.vim')
 call dein#add('othree/es.next.syntax.vim')
 call dein#add('tpope/vim-ragtag')
 call dein#add('othree/html5.vim')
+call dein#add('maksimr/vim-jsbeautify')
 " }}}
 
 " {{{ DISPLAY
@@ -213,7 +214,7 @@ set mouse=a
 " 80 chars/line
 set textwidth=0
 if exists('&colorcolumn')
-  set colorcolumn=80
+  "set colorcolumn=100
 endif
 
 " Keep the cursor on the same column
@@ -239,7 +240,7 @@ colorscheme OceanicNext
 "colorscheme kalisi
 "colorscheme vice
 if has('gui_running')
-  set guifont=Menlo:h14 columns=80 lines=40
+  set guifont=Meslo:h16 lines=40
 endif
 " }}}
 
@@ -267,6 +268,27 @@ endif
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 " }}}
+
+let g:lightline = {
+      \ 'component_function': {
+      \   'filetype': 'MyFiletype',
+      \   'fileformat': 'MyFileformat',
+      \ }
+      \ }
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+autocmd FileType javascript vnoremap <leader>x  :call RangeJsBeautify()<cr>
+autocmd FileType json vnoremap <buffer>x :call RangeJsonBeautify()<cr>
+autocmd FileType jsx vnoremap <buffer>x :call RangeJsxBeautify()<cr>
+autocmd FileType html vnoremap <buffer>x :call RangeHtmlBeautify()<cr>
+autocmd FileType css vnoremap <buffer>x :call RangeCSSBeautify()<cr>
 
 " ]]]]
 
