@@ -84,6 +84,7 @@ call dein#add('tpope/vim-ragtag')
 call dein#add('othree/html5.vim')
 call dein#add('maksimr/vim-jsbeautify') " See README
 call dein#add('bentayloruk/vim-react-es6-snippets')
+call dein#add('benjie/neomake-local-eslint.vim')
 " }}}
 
 " {{{ DISPLAY
@@ -94,6 +95,9 @@ call dein#add('vim-scripts/ZoomWin')
 call dein#add('zhaocai/GoldenView.Vim')
 call dein#add('ryanoasis/vim-devicons')
 call dein#add('vim-scripts/ScrollColors')
+"if has("gui_running")
+  call dein#add('equalsraf/neovim-gui-shim')
+"endif
 " }}}
 
 " {{{ GIT
@@ -156,6 +160,10 @@ let g:javascript_conceal_prototype      = "¶"
 let g:javascript_conceal_static         = "•"
 let g:javascript_conceal_super          = "Ω"
 let g:javascript_conceal_arrow_function = "⇒"
+
+" }}}
+
+let g:neomake_javascript_enabled_makers = ['eslint']
 
 hi clear Conceal
 
@@ -283,19 +291,28 @@ set t_Co=256
 colorscheme OceanicNext
 "colorscheme kalisi
 "colorscheme vice
-if has('gui_running')
-  set guifont=Meslo:h16 lines=40
-  set guioptions-=T
-  set guioptions-=e
-  set guitablabel=%M\ %t
-  if has("gui_gtk2")
-    set guifont=Inconsolata-dz\ for\ Powerline\ 12
-  elseif has("gui_macvim")
-    set guifont=Menlo\ Regular:h14
-  elseif has("gui_win32")
-    set guifont=Consolas:h11:cANSI
-  endif
-endif
+"if has('gui_running')
+  "set guifont=Meslo:h16 lines=40
+  "set guioptions-=T
+  "set guioptions-=e
+  "set guitablabel=%M\ %t
+  "if has("gui_gtk2")
+    "set guifont=Inconsolata-dz\ for\ Powerline\ 12
+  "elseif has("gui_macvim")
+    "set guifont=Menlo\ Regular:h14
+  "elseif has("gui_win32")
+    "set guifont=Consolas:h11:cANSI
+  "endif
+"endif
+
+
+"https://gist.github.com/kevinis/c788f85a654b2d7581d8
+"URxvt*font:                 xft:Monaco for Powerline:regular:size=8
+"URxvt*imFont:               xft:Monaco for Powerline:regular:size=8
+"URxvt*boldFont:             xft:Monaco for Powerline:bold:size=8
+"URxvt*italicFont:           xft:Monaco for Powerline:italic:size=8
+"URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=8
+hi IncSearch gui=italic guifg=#303030 guibg=#cd8b60
 "URxvt*font: xft:DroidSansMonoForPowerline Nerd Font:pixelsize=15:antialias=true:hinting=true xft:Hack:size=10:Hack:size=10:Terminess Powerline:style=regular
 " }}}
 
