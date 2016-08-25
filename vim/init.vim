@@ -87,6 +87,11 @@ call dein#add('bentayloruk/vim-react-es6-snippets')
 call dein#add('benjie/neomake-local-eslint.vim')
 " }}}
 
+" {{{ C#/DOTNET
+call dein#add('OrangeT/vim-csharp')
+call dein#add('OmniSharp/omnisharp-vim')
+" }}}
+
 " {{{ DISPLAY
 call dein#add('junegunn/goyo.vim')
 call dein#add('junegunn/limelight.vim')
