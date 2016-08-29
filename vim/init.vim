@@ -87,6 +87,13 @@ call dein#add('bentayloruk/vim-react-es6-snippets')
 call dein#add('benjie/neomake-local-eslint.vim')
 " }}}
 
+" {{{ ELM
+" npm install -g elm
+" npm install -g elm-test
+" npm install -g elm-oracle
+call dein#add('elmcast/elm-vim')
+" }}}
+
 " {{{ C#/DOTNET
 call dein#add('OrangeT/vim-csharp')
 call dein#add('OmniSharp/omnisharp-vim')
@@ -168,7 +175,7 @@ let g:goldenview__enable_default_mapping = 1
 
 " }}}
 
-let g:neomake_javascript_enabled_makers = ['eslint']
+"let g:neomake_javascript_enabled_makers = ['eslint']
 
 hi clear Conceal
 
@@ -325,7 +332,7 @@ hi IncSearch gui=italic guifg=#303030 guibg=#cd8b60
 
 let g:deoplete#enable_at_startup = 1
 
-autocmd! BufWritePost * Neomake
+"autocmd! BufWritePost * Neomake
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " }}}
 
