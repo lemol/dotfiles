@@ -18,7 +18,7 @@ if ! [ -e "$INSTALL_DIR" ]; then
 fi
 
 # write initial setting for .vimrc
-cat <<EOF >$NVIMDRC
+cat <<EOF >$NVIMRC
 "Init Scripts-----------------------------
 if &compatible
   set nocompatible               \" Be iMproved
@@ -29,6 +29,8 @@ set runtimepath+=$INSTALL_DIR
 
 " Required:
 call dein#begin('$NVIMD')
+
+call dein#add('Shougo/dein.vim')
 
 source $BASE/vim/init.vim
 

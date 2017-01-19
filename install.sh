@@ -1,4 +1,4 @@
-install_neovim () {
+install_neovim() {
   if [ ! -n "$NVIMD" ]; then
     NVIMD=~/.config/nvim
   fi
@@ -9,18 +9,22 @@ install_neovim () {
 
   mkdir -p $NVIMD
 
-  if [[ -f "$NVIMRC" ]]; then
+  if [ -f "$NVIMRC" ]; then
     mv "$NVIMRC" "$BACKUP"
     echo -e "Created backup for $NVIMRC.\n"
   fi
 
-  $BASE/vim/install.sh
+  echo "neovim"
+  export NVIMD
+  export NVIMRC
+  export BASE
+  vim/install.sh
 }
 
-install_X () {
+install_X() {
   XRESOURCES=~/.Xresources
 
-  if [[ -f "$XRESOURCES" ]]; then
+  if [ -f "$XRESOURCES" ]; then
     if [[ "$(readlink $XRESOURCES)" =~ "$BASE/X/.Xresources" ]]; then
       echo -e "X is already configured to use dotfiles.\n"
     else
@@ -37,8 +41,6 @@ install_X () {
 
 main() {
 
-  # Only enable exit-on-error after the non-critical colorization stuff,
-  # which may fail on systems lacking tput or terminfo
   set -e
 
   if [ ! -n "$BASE" ]; then
@@ -55,7 +57,7 @@ main() {
     exit
   fi
 
-  printf "Cloning from github..."
+  printf "Cloning from github...\n"
   hash git >/dev/null 2>&1 || {
     echo "Error: git is not installed"
     exit 1
@@ -66,12 +68,12 @@ main() {
     exit 1
   }
 
-  mkdir -p "$BACKUP$"
+  mkdir -p "$BACKUP"
 
   printf "Configuring neovim\n"
   install_neovim
-  printf "Configuring X\n"
-  install_X
+  #printf "Configuring X\n"
+  #install_X
 
   echo -e "DONE.\n"
   env zsh

@@ -1,16 +1,16 @@
-if &compatible
-  set nocompatible
-endif
+"if &compatible
+"  set nocompatible
+"endif
 
-if has("win32") || has("win16")
-  set runtimepath+=~/AppData/Local/nvim/plugins/repos/github.com/Shougo/dein.vim
-  call dein#begin(expand('~/AppData/Local/nvim/plugins'))
-else
-  set runtimepath+=~/.config/nvim/plugins/repos/github.com/Shougo/dein.vim
-  call dein#begin(expand('~/.config/nvim/plugins'))
-endif
+"if has("win32") || has("win16")
+"  set runtimepath+=~/AppData/Local/nvim/plugins/repos/github.com/Shougo/dein.vim
+"  call dein#begin(expand('~/AppData/Local/nvim/plugins'))
+"else
+"  set runtimepath+=~/.config/nvim/plugins/repos/github.com/Shougo/dein.vim
+"  call dein#begin(expand('~/.config/nvim/plugins'))
+"endif
 
-call dein#add('Shougo/dein.vim')
+"call dein#add('Shougo/dein.vim')
 
 " [[[[ PLUGINS INSTALATION
 
