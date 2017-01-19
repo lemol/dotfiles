@@ -66,7 +66,7 @@ main() {
     exit 1
   }
 
-  mkdir -p "$BACKUP$
+  mkdir -p "$BACKUP$"
 
   printf "Configuring neovim\n"
   install_neovim
