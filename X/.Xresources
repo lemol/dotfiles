@@ -1,3 +1,6 @@
+*customization: -color
+XTerm*termName:  xterm-256color
+
 Xft.autohint: false
 Xft.antialias: true
 Xft.hinting: true

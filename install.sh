@@ -108,8 +108,9 @@ main() {
 
   printf "Configuring neovim\n"
   install_neovim
-  #printf "Configuring X\n"
-  #install_X
+  
+  printf "Configuring X\n"
+  install_X
 
   printf "Configuring ZSH\n"
   install_zsh
