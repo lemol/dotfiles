@@ -25,7 +25,7 @@ install_X() {
   XRESOURCES=~/.Xresources
 
   if [ -f "$XRESOURCES" ]; then
-    if [[ "$(readlink $XRESOURCES)" =~ "$BASE/X/.Xresources" ]]; then
+    if [ "$(readlink $XRESOURCES)" =~ "$BASE/X/.Xresources" ]; then
       echo -e "X is already configured to use dotfiles.\n"
     else
       mv "$XRESOURCES" "$BACKUP"
@@ -43,7 +43,7 @@ install_zsh() {
   ZSHRC=~/.zshrc
 
   if [ -f "$ZSHRC" ]; then
-    if [[ "$(readlink $ZSHRC)" =~ "$BASE/zsh/.zshrc" ]]; then
+    if [ "$(readlink $ZSHRC)" =~ "$BASE/zsh/.zshrc" ]; then
       echo -e "zsh is already configured to use dotfiles.\n"
     else
       mv "$ZSHRC" "$BACKUP"
@@ -61,7 +61,7 @@ install_tmux() {
   TMUXCONF=~/.tmux.conf
 
   if [ -f "$TMUXCONF" ]; then
-    if [[ "$(readlink $TMUXCONF)" =~ "$BASE/tmux/.tmux.conf" ]]; then
+    if [ "$(readlink $TMUXCONF)" =~ "$BASE/tmux/.tmux.conf" ]; then
       echo -e "tmux is already configured to use dotfiles.\n"
     else
       mv "$TMUXCONF" "$BACKUP"
