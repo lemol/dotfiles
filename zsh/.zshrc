@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh-old
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -136,7 +136,7 @@ bindkey '\e[B' history-beginning-search-forward
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' menu select
-zstyle :compinstall filename '/home/lemol/.zshrc'
+zstyle :compinstall filename '~/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -147,8 +147,6 @@ HISTSIZE=1000
 SAVEHIST=1000
 bindkey -v
 # End of lines configured by zsh-newuser-install
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 alias npmoff="npm install --cache-min 999999"
 alias vim="nvim"

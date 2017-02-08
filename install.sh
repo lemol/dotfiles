@@ -39,6 +39,42 @@ install_X() {
   fi
 }
 
+install_zsh() {
+  ZSHRC=~/.zshrc
+
+  if [ -f "$ZSHRC" ]; then
+    if [ "$(readlink $ZSHRC)" =~ "$BASE/zsh/.zshrc" ]; then
+      echo -e "zsh is already configured to use dotfiles.\n"
+    else
+      mv "$ZSHRC" "$BACKUP"
+      echo -e "Created backup for $ZSHRC.\n"
+      ln -s "$BASE/zsh/.zshrc" "$ZSHRC"
+      echo -e "Installed zsh with $ZSHRC.\n"
+    fi
+  else
+    ln -s "$BASE/zsh/.zshrc" "$ZSHRC"
+    echo -e "Installed zsh with $ZSHRC.\n"
+  fi
+}
+
+install_tmux() {
+  TMUXCONF=~/.tmux.conf
+
+  if [ -f "$TMUXCONF" ]; then
+    if [ "$(readlink $TMUXCONF)" =~ "$BASE/tmux/.tmux.conf" ]; then
+      echo -e "tmux is already configured to use dotfiles.\n"
+    else
+      mv "$TMUXCONF" "$BACKUP"
+      echo -e "Created backup for $TMUXCONF.\n"
+      ln -s "$BASE/tmux/.tmux.conf" "$TMUXCONF"
+      echo -e "Installed tmux with $TMUXCONF.\n"
+    fi
+  else
+    ln -s "$BASE/tmux/.tmux.conf" "$TMUXCONF"
+    echo -e "Installed tmux with $TMUXCONF.\n"
+  fi
+}
+
 main() {
 
   set -e
@@ -75,6 +111,12 @@ main() {
   #printf "Configuring X\n"
   #install_X
 
+  printf "Configuring ZSH\n"
+  install_zsh
+  
+  printf "Configuring TMUX\n"
+  install_tmux
+  
   echo -e "DONE.\n"
   env zsh
 }
