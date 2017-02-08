@@ -50,10 +50,9 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux archlinux cabal common-aliases compleat cp dirhistory git-prompt node npm vim-interaction vi-mode tmuxinator themes sudo systemd web-search git-flow-completion docker git-flow github history node npm per-directory-history python urltools web-search extract go golang gulp heroku history-substring-search postgres react-native stack yarn)
+plugins=(git tmux archlinux cabal common-aliases compleat cp dirhistory git-prompt node npm vim-interaction vi-mode tmuxinator themes sudo systemd web-search git-flow-completion docker git-flow github history node npm per-directory-history python urltools web-search extract go golang gulp heroku history-substring-search postgres react-native stack yarn zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 EDITOR='vim'
 export PATH=$HOME/.local/bin:$HOME/.gem/ruby/2.1.0/bin:$HOME/bin:/usr/local/bin:$PATH
