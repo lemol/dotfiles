@@ -37,6 +37,22 @@ install_X() {
     ln -s "$BASE/vim/.Xresources" "$XRESOURCES"
     echo -e "Installed X with $XRESOURCES.\n"
   fi
+  
+  XDEFAULTS=~/.Xdefaults
+
+  if [ -f "$XDEFAULTS" ]; then
+    if [ "$(readlink $XDEFAULTS)" =~ "$BASE/X/.Xdefaults" ]; then
+      echo -e "X is already configured to use dotfiles.\n"
+    else
+      mv "$XDEFAULTS" "$BACKUP"
+      echo -e "Created backup for $XDEFAULTS.\n"
+      ln -s "$BASE/vim/.Xdefaults" "$XDEFAULTS"
+      echo -e "Installed X with $XDEFAULTS.\n"
+    fi
+  else
+    ln -s "$BASE/vim/.Xdefaults" "$XDEFAULTS"
+    echo -e "Installed X with $XDEFAULTS.\n"
+  fi
 }
 
 install_zsh() {
