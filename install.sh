@@ -43,7 +43,7 @@ install_zsh() {
   ZSHRC=~/.zshrc
 
   if [ -f "$ZSHRC" ]; then
-    if [ "$(readlink $ZSHRC)" =~ "$BASE/zsh/.zshrc" ]; then
+    if [[ "$(readlink $ZSHRC)" =~ "$BASE/zsh/.zshrc" ]]; then
       echo -e "zsh is already configured to use dotfiles.\n"
     else
       mv "$ZSHRC" "$BACKUP"
