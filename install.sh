@@ -18,7 +18,7 @@ install_neovim() {
   export NVIMD
   export NVIMRC
   export BASE
-  vim/install.sh
+  $BASE/vim/install.sh
 }
 
 install_X() {
