@@ -61,7 +61,7 @@ install_tmux() {
   TMUXCONF=~/.tmux.conf
 
   if [ -f "$TMUXCONF" ]; then
-    if [ "$(readlink $TMUXCONF)" =~ "$BASE/tmux/.tmux.conf" ]; then
+    if [[ "$(readlink $TMUXCONF)" =~ "$BASE/tmux/.tmux.conf" ]]; then
       echo -e "tmux is already configured to use dotfiles.\n"
     else
       mv "$TMUXCONF" "$BACKUP"
