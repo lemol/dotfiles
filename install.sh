@@ -125,14 +125,14 @@ main() {
   printf "Configuring neovim\n"
   install_neovim
   
-  printf "Configuring X\n"
-  install_X
+  #printf "Configuring X\n"
+  #install_X
 
   printf "Configuring ZSH\n"
   install_zsh
   
-  printf "Configuring TMUX\n"
-  install_tmux
+  #printf "Configuring TMUX\n"
+  #install_tmux
   
   echo -e "DONE.\n"
   env zsh
