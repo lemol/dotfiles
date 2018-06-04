@@ -16,13 +16,18 @@
 
 " {{{ FUNDAMENTAL
 call dein#add('haya14busa/dein-command.vim')
-call dein#add('Shougo/neocomplete.vim')
+"call dein#add('Shougo/neocomplete.vim')
 call dein#add('Shougo/deoplete.nvim')
-call dein#add('neomake/neomake')
+"call dein#add('vim-syntastic/syntastic')
+"call dein#add('neomake/neomake')
 call dein#add('Shougo/vimshell')
 call dein#add('Shougo/vimproc.vim')
 call dein#add('mhinz/vim-startify')
 call dein#add('tpope/vim-sensible')
+call dein#add('autozimu/LanguageClient-neovim', {
+    \ 'rev': 'next',
+    \ 'build': 'bash install.sh',
+    \ })
 " }}}
 
 " {{{ STRUCTURE
@@ -48,8 +53,8 @@ call dein#add('junegunn/vim-peekaboo')
 " }}}
 
 " {{{ EDITING
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
+"call dein#add('Shougo/neosnippet.vim')
+"call dein#add('Shougo/neosnippet-snippets')
 call dein#add('sheerun/vim-polyglot')
 call dein#add('scrooloose/nerdcommenter')
 call dein#add('Raimondi/delimitMate')
@@ -59,7 +64,7 @@ call dein#add('easymotion/vim-easymotion')
 call dein#add('terryma/vim-multiple-cursors')
 call dein#add('bronson/vim-trailing-whitespace')
 call dein#add('tpope/vim-unimpaired')
-call dein#add('ervandew/supertab')
+"call dein#add('ervandew/supertab')
 call dein#add('Yggdroot/indentLine')
 call dein#add('Valloric/MatchTagAlways')
 call dein#add('tpope/vim-surround')
@@ -73,18 +78,28 @@ call dein#add('AndrewRadev/splitjoin.vim')
 " {{{ HTML/JS/NODEJS/REACTJS
 call dein#add('moll/vim-node')
 call dein#add('neovim/node-host', { 'do': 'npm install --cache-min Infinity --loglevel http' })
-call dein#add('othree/yajs.vim')
+
+call dein#add('othree/html5.vim')
+call dein#add('mattn/emmet-vim')
+
 call dein#add('pangloss/vim-javascript')
 call dein#add('mxw/vim-jsx')
-call dein#add('mustache/vim-mustache-handlebars')
-call dein#add('mattn/emmet-vim')
-call dein#add('othree/javascript-libraries-syntax.vim')
-call dein#add('othree/es.next.syntax.vim')
-call dein#add('tpope/vim-ragtag')
-call dein#add('othree/html5.vim')
-call dein#add('maksimr/vim-jsbeautify') " See README
-call dein#add('bentayloruk/vim-react-es6-snippets')
 call dein#add('benjie/neomake-local-eslint.vim')
+
+call dein#add('mustache/vim-mustache-handlebars')
+
+call dein#add('flowtype/vim-flow')
+"call dein#add('sbdchd/neoformat')
+"call dein#add('prettier/vim-prettier')
+call dein#add('skywind3000/asyncrun.vim')
+call dein#add('w0rp/ale')
+call dein#add('styled-components/vim-styled-components')
+
+"call dein#add('othree/yajs.vim')
+"call dein#add('othree/es.next.syntax.vim')
+"call dein#add('othree/javascript-libraries-syntax.vim')
+"call dein#add('maksimr/vim-jsbeautify') " See README
+"call dein#add('bentayloruk/vim-react-es6-snippets')
 " }}}
 
 " {{{ ELM
@@ -97,6 +112,8 @@ call dein#add('elmcast/elm-vim')
 " {{{ C#/DOTNET
 call dein#add('OrangeT/vim-csharp')
 call dein#add('OmniSharp/omnisharp-vim')
+call dein#add('tpope/vim-dispatch')
+call dein#add('vim-scripts/dbext.vim')
 " }}}
 
 " {{{ DISPLAY
@@ -107,6 +124,7 @@ call dein#add('vim-scripts/ZoomWin')
 call dein#add('zhaocai/GoldenView.Vim')
 call dein#add('ryanoasis/vim-devicons')
 call dein#add('vim-scripts/ScrollColors')
+call dein#add('Yggdroot/indentLine')
 "if has("gui_running")
   call dein#add('equalsraf/neovim-gui-shim')
 "endif
@@ -133,6 +151,7 @@ call dein#add('vim-pandoc/vim-pandoc-syntax')
 call dein#add('freeo/vim-kalisi')
 call dein#add('bcicen/vim-vice')
 call dein#add('mhartington/oceanic-next')
+call dein#add('ayu-theme/ayu-vim')
 "call dein#add('altercation/vim-colors-solarized')
 "call dein#add('frankier/neovim-colors-solarized-truecolor-only')
 " }}}
@@ -152,6 +171,8 @@ if dein#check_install()
   call dein#install()
 endif
 
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
 let g:airline_theme='oceanicnext'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#branch#format = 'Git_flow_branch_format'
@@ -161,6 +182,29 @@ let g:goldenview__enable_at_startup = 1
 let g:goldenview__enable_default_mapping = 1
 
 " javascript again {{{
+
+let g:javascript_plugin_flow = 1
+
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+augroup END
+
+"let g:neoformat_try_formatprg = 1
+"let g:neoformat_run_all_formatters = 1
+"augroup NeoformatAutoFormat
+    "autocmd!
+    "autocmd FileType javascript setlocal formatprg=prettier\
+                                             "\--stdin\
+                                             "\--print-width\ 80\
+                                             "\--single-quote\
+                                             "\--trailing-comma\ es5
+    "autocmd BufWritePre *.js Neoformat
+"augroup END
+
+"let g:prettier#autoformat = 0
+"let g:prettier#config#parser = 'babylon'
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
 
 "let g:javascript_conceal_function       = "ƒ"
 "let g:javascript_conceal_null           = "ø"
@@ -244,7 +288,8 @@ set foldnestmax=5
 set foldlevelstart=99
 set foldcolumn=0
 set grepformat=%f:%l:%c:%m,%f:%l:%m
-set completeopt=menuone,preview
+set completeopt=longest,menuone,preview
+set previewheight=5
 set nocursorline
 set nrformats=hex
 silent! set cryptmethod=blowfish2
@@ -300,7 +345,10 @@ endif
 " {{{ theme
 set background=dark
 set t_Co=256
-colorscheme OceanicNext
+"colorscheme OceanicNext
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
+
 "colorscheme kalisi
 "colorscheme vice
 "if has('gui_running')
@@ -330,11 +378,56 @@ hi IncSearch gui=italic guifg=#303030 guibg=#cd8b60
 
 " {{{ plugins
 
+"let b:SuperTabDisabled = 0
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+let g:LanguageClient_loggingLevel = 'DEBUG'
+let g:LanguageClient_loadSettings = 0
+
+let g:LanguageClient_serverCommands = {
+    \ 'cs': ['tcp://127.0.0.1:2000'],
+    \ }
+
+let g:LanguageClient_rootMarkers = {
+    \ 'cs': ['.git', '*.csproj'],
+    \ }
+
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-x><C-o>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction "}}}
 
 "autocmd! BufWritePost * Neomake
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " }}}
+
+" [[[ syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_cs_checkers = ['code_checker']
+" ]]]
+
+" [[[ dotnet
+let g:OmniSharp_server_type = 'roslyn'
+let g:OmniSharp_prefer_global_sln = 1
+let g:OmniSharp_server_path = '~/.local/opt/omnisharp-http/start-server'
+" ]]]
 
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 let g:ctrlp_custom_ignore = {
@@ -422,6 +515,7 @@ noremap <leader>bd :Bd<cr>
 nnoremap <leader>tp :tabprevious<cr>
 nnoremap <leader>tn :tabnext<cr>
 nnoremap <leader>to :tabnew<cr>
+nnoremap <leader><tab> :tabnext<cr>
 
 " delete buffer without closing pane
 noremap <leader>bd :Bd<cr>
@@ -431,6 +525,7 @@ map <leader>ss :setlocal spell!<cr>
 
 " fuzzy find buffers
 noremap <leader>b<space> :CtrlPBuffer<cr>
+noremap <C-O> :CtrlPBuffer<cr>
 " Motions
 
 " Stop Align plugin from forcing its mappings on us
@@ -521,7 +616,7 @@ endfunction
 
 command! -nargs=1 GGrep call NonintrusiveGitGrep(<q-args>)
 nmap <leader>gs :Gstatus<CR>
-nmap <leader>gg :copen<CR>:GGrep 
+nmap <leader>gg :copen<CR>:GGrep
 nmap <leader>gl :Extradite!<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gb :Gblame<CR>
@@ -545,14 +640,141 @@ nnoremap <silent> <leader>g? :call CommittedFiles()<CR>:copen<CR>
 nmap <silent> <leader><cr> :noh\|hi Cursor guibg=red<cr>
 
 " Use buffer words as default tab completion
-let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
+"let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
 
 " But provide (neco-ghc) omnicompletion
-if has("gui_running")
-  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-else " no gui
-  if has("unix")
-    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-  endif
-endif
+"if has("gui_running")
+  "imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+"else " no gui
+  "if has("unix")
+    "inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  "endif
+"endif
 " ]]]]
+
+" [[[ omnisharp
+augroup omnisharp_commands
+    autocmd!
+
+    " Synchronous build (blocks Vim)
+    "autocmd FileType cs nnoremap <buffer> <F5> :wa!<CR>:OmniSharpBuild<CR>
+    " Builds can also run asynchronously with vim-dispatch installed
+    autocmd FileType cs nnoremap <buffer> <Leader>b :wa!<CR>:OmniSharpBuildAsync<CR>
+    " Automatic syntax check on events (TextChanged requires Vim 7.4)
+    autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+
+    " Automatically add new cs files to the nearest project on save
+    autocmd BufWritePost *.cs call OmniSharp#AddToProject()
+
+    " Show type information automatically when the cursor stops moving
+    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+
+    " The following commands are contextual, based on the cursor position.
+    autocmd FileType cs nnoremap <buffer> gd :OmniSharpGotoDefinition<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fi :OmniSharpFindImplementations<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fs :OmniSharpFindSymbol<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fu :OmniSharpFindUsages<CR>
+
+    " Finds members in the current buffer
+    autocmd FileType cs nnoremap <buffer> <Leader>fm :OmniSharpFindMembers<CR>
+
+    " Cursor can be anywhere on the line containing an issue
+    autocmd FileType cs nnoremap <buffer> <Leader>x  :OmniSharpFixIssue<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fx :OmniSharpFixUsings<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>tt :OmniSharpTypeLookup<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>dc :OmniSharpDocumentation<CR>
+
+    " Navigate up and down by method/property/field
+    autocmd FileType cs nnoremap <buffer> <C-k> :OmniSharpNavigateUp<CR>
+    autocmd FileType cs nnoremap <buffer> <C-j> :OmniSharpNavigateDown<CR>
+
+    " Many
+    nnoremap <Leader>rr :OmniSharpRename<CR>
+augroup END
+
+" Contextual code actions (uses fzf, CtrlP or unite.vim when available)
+nnoremap <Leader><Space> :OmniSharpGetCodeActions<CR>
+" Run code actions with text selected in visual mode to extract method
+xnoremap <Leader><Space> :call OmniSharp#GetCodeActions('visual')<CR>
+
+" Rename with dialog
+nnoremap <Leader>nm :OmniSharpRename<CR>
+nnoremap <F2> :OmniSharpRename<CR>
+" Rename without dialog - with cursor on the symbol to rename: `:Rename newname`
+command! -nargs=1 Rename :call OmniSharp#RenameTo("<args>")
+
+" Force OmniSharp to reload the solution. Useful when switching branches etc.
+nnoremap <Leader>rl :OmniSharpReloadSolution<CR>
+nnoremap <Leader>cf :OmniSharpCodeFormat<CR>
+" Load the current .cs file to the nearest project
+nnoremap <Leader>tp :OmniSharpAddToProject<CR>
+
+" Start the omnisharp server for the current solution
+nnoremap <Leader>ss :OmniSharpStartServer<CR>
+nnoremap <Leader>sp :OmniSharpStopServer<CR>
+
+" Add syntax highlighting for types and interfaces
+nnoremap <Leader>th :OmniSharpHighlightTypes<CR>
+
+let g:OmniSharp_selector_ui = 'unite'  " Use unite.vim
+"let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
+"let g:OmniSharp_selector_ui = 'fzf'    " Use fzf.vim
+"let g:OmniSharp_selector_ui = ''       " Use vim - command line, quickfix etc.
+
+" Enable snippet completion
+" let g:OmniSharp_want_snippet=1
+" ]]]
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" nnoremap <silent> <Leader><Leader> :Files<CR>
+nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <Leader>C        :Colors<CR>
+nnoremap <silent> <Leader><Enter>  :Buffers<CR>
+nnoremap <silent> <Leader>l        :Lines<CR>
+nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
+nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
+xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
+nnoremap <silent> <Leader>`        :Marks<CR>
+
+nnoremap <silent> <Leader>p        :FZF<CR>
+" nnoremap <silent> q: :History:<CR>
+" nnoremap <silent> q/ :History/<CR>
+
+
+
+" {{{ FLOWLANG
+let g:flow#autoclose = 1
+let g:flow#enable = 1
+let g:flow#flowpath = "npm run flow"
+" }}}
+
+let g:ale_sign_error = '●' " Less aggressive than the default '>>'
+let g:ale_sign_warning = '.'
+let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
