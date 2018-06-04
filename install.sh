@@ -131,8 +131,8 @@ main() {
   printf "Configuring ZSH\n"
   install_zsh
   
-  #printf "Configuring TMUX\n"
-  #install_tmux
+  printf "Configuring TMUX\n"
+  install_tmux
   
   echo -e "DONE.\n"
   env zsh
