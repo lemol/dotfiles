@@ -54,7 +54,8 @@ plugins=(git tmux archlinux cabal common-aliases compleat cp dirhistory git-prom
 
 source $ZSH/oh-my-zsh.sh
 
-EDITOR='vim'
+export EDITOR='vim'
+export PATH=$(/usr/bin/printenv PATH | /usr/bin/perl -ne 'print join(":", grep { !/\/mnt\/[a-z]/ } split(/:/));')
 export PATH=$HOME/.local/bin:$HOME/.gem/ruby/2.1.0/bin:$HOME/bin:/usr/local/bin:$PATH
 # User configuration
 
@@ -150,3 +151,19 @@ bindkey -v
 alias npmoff="npm install --cache-min 999999"
 alias vim="nvim"
 alias tmux="env TERM=xterm-256color tmux"
+
+export DOCKER_HOST=tcp://0.0.0.0:2375
+
+[[ -z "$TMUX" && -n "$USE_TMUX" ]] && {
+    [[ -n "$ATTACH_ONLY" ]] && {
+        tmux a 2>/dev/null || {
+            cd && exec tmux
+        }
+        exit
+    }
+
+    tmux new-window -c "$PWD" 2>/dev/null && exec tmux a
+    exec tmux
+}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
