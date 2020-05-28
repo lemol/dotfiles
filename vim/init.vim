@@ -1,99 +1,445 @@
-"if &compatible
-"  set nocompatible
-"endif
+" curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+" sh ./installer.sh ~/.cache/dein
 
-"if has("win32") || has("win16")
-"  set runtimepath+=~/AppData/Local/nvim/plugins/repos/github.com/Shougo/dein.vim
-"  call dein#begin(expand('~/AppData/Local/nvim/plugins'))
-"else
-"  set runtimepath+=~/.config/nvim/plugins/repos/github.com/Shougo/dein.vim
-"  call dein#begin(expand('~/.config/nvim/plugins'))
-"endif
+if &compatible
+  set nocompatible
+endif
 
-"call dein#add('Shougo/dein.vim')
+" Add the dein installation directory into runtimepath
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
+
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('Shougo/deoplete.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
+
+  " UI
+  call dein#add('mhinz/vim-startify')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('Xuyuanp/nerdtree-git-plugin')
+  call dein#add('wsdjeg/dein-ui.vim')
+  call dein#add('ryanoasis/vim-devicons')
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('christoomey/vim-tmux-navigator')
+  call dein#add('majutsushi/tagbar')
+
+  if empty($TMUX)==0
+    call dein#add('edkolev/tmuxline.vim')
+  endif
+
+  " THEMES
+  call dein#add('morhetz/gruvbox')
+  call dein#add('mhartington/oceanic-next')
+  "call dein#add('hardcoreplayers/oceanic-material')
+
+
+  " GIT
+  call dein#add('airblade/vim-gitgutter')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-rhubarb')
+
+  " NAVIGATION
+  "call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('Shougo/denite.nvim')
+  call dein#add('liuchengxu/vim-clap')
+  call dein#add('vn-ki/coc-clap')
+
+  " LANGUAGE
+  call dein#add('neoclide/coc.nvim', {'rev': 'release'})
+  call dein#add('vim-test/vim-test')
+  call dein#add('sheerun/vim-polyglot')
+
+  " CODE
+  call dein#add('preservim/nerdcommenter')
+  call dein#add('Raimondi/delimitMate')
+  call dein#add('godlygeek/tabular')
+  call dein#add('junegunn/vim-peekaboo')
+  call dein#add('terryma/vim-multiple-cursors')
+  call dein#add('bronson/vim-trailing-whitespace')
+  call dein#add('tpope/vim-unimpaired')
+  call dein#add('Valloric/MatchTagAlways')
+  call dein#add('tpope/vim-surround')
+  call dein#add('svermeulen/vim-subversive')
+  call dein#add('wellle/targets.vim')
+  call dein#add('tpope/vim-repeat')
+  call dein#add('junegunn/rainbow_parentheses.vim')
+  call dein#add('mbbill/undotree')
+
+  " ELM
+  " npm install -g @elm-tooling/elm-language-server
+  call dein#add('andys8/vim-elm-syntax')
+  call dein#add('antoine-atmire/vim-elmc')
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+filetype plugin indent on
+syntax enable
+set background=dark
+colorscheme OceanicNext
+set encoding=UTF-8
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
+" { BASE
+
+let mapleader=","
+set tabstop=2
+set foldmethod=manual
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/elm-stuff/*
+
+" }
+
+" { UI
+
+nmap <silent> <leader>f <ESC>:NERDTreeToggle<CR>
+let g:NERDTreeIgnore = ['^node_modules$']
+
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+let g:airline_theme='oceanicnext'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+" }
+
+" { NAVIGATION
+
+" CtrlP
+"let g:ctrlp_map = '<c-p>'
+"let g:ctrlp_cmd = 'CtrlP'
+"let g:ctrlp_working_path_mode = 'ra'
+
+
+nmap <c-p> :Clap files<CR>
+nmap <c-s-p> :Clap buffers<CR>
+nmap <c-o> :Clap coc_outline<CR>
+
+vnoremap < <gv 						" Reselect after indent/outdent
+vnoremap > >gv
+
+nnoremap <C-left> <C-w>h
+nnoremap <C-down> <C-w>j
+nnoremap <C-up> <C-w>k
+nnoremap <C-right> <C-w>l
+
+" Open window splits in various places
+nmap <leader>sh :leftabove  vnew<CR>
+nmap <leader>sl :rightbelow vnew<CR>
+nmap <leader>sk :leftabove  new<CR>
+nmap <leader>sj :rightbelow new<CR>
+
+" previous buffer, next buffer
+nnoremap <leader>bp :bp<cr>
+nnoremap <leader>bn :bn<cr>
+
+" close every window in current tabview but the current
+nnoremap <leader>bo <c-w>o
+
+" delete buffer without closing pane
+noremap <leader>bd :Bd<cr>
+
+" previous buffer, next buffer
+nnoremap <leader>tp :tabprevious<cr>
+nnoremap <leader>tn :tabnext<cr>
+nnoremap <leader>to :tabnew<cr>
+nnoremap <leader><tab> :tabnext<cr>
+
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
+
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+      \ [ '.git/', '.ropeproject/', '__pycache__/*', '*.pyc', 'node_modules/',
+      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/', '*.png', 'elm-stuff/'])
+
+"nmap <C-p> :Denite -start-filter file/rec<CR>
+"nmap <C-o> :Denite buffer<CR>
+"nnoremap \ :Denite grep<CR>
+
+
+" Tabularize
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+  inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+endif
+
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
+
+" Subversive
+
+nmap s <plug>(SubversiveSubstitute)
+nmap ss <plug>(SubversiveSubstituteLine)
+nmap S <plug>(SubversiveSubstituteToEndOfLine)
+nmap <leader>s <plug>(SubversiveSubstituteRange)
+xmap <leader>s <plug>(SubversiveSubstituteRange)
+nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
+
+" }
+
+
+" { COC
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=1
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>F  <Plug>(coc-format-selected)
+nmap <leader>F  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Mappings using CoCList:
+" Show all diagnostics.
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" }
+
+function! _blockcomment()
 " [[[[ PLUGINS INSTALATION
 
 " {{{ FUNDAMENTAL
-call dein#add('haya14busa/dein-command.vim')
+"call dein#add('haya14busa/dein-command.vim')
 "call dein#add('Shougo/neocomplete.vim')
-call dein#add('Shougo/deoplete.nvim')
+"call dein#add('Shougo/deoplete.nvim')
 "call dein#add('vim-syntastic/syntastic')
 "call dein#add('neomake/neomake')
-call dein#add('Shougo/vimshell')
-call dein#add('Shougo/vimproc.vim')
-call dein#add('mhinz/vim-startify')
-call dein#add('tpope/vim-sensible')
-call dein#add('autozimu/LanguageClient-neovim', {
-    \ 'rev': 'next',
-    \ 'build': 'bash install.sh',
-    \ })
+"call dein#add('Shougo/vimshell')
+"call dein#add('Shougo/vimproc.vim')
+"call dein#add('mhinz/vim-startify')
+"call dein#add('tpope/vim-sensible')
+"call dein#add('autozimu/LanguageClient-neovim', {
+"    \ 'rev': 'next',
+"    \ 'build': 'bash install.sh',
+"    \ })
 " }}}
 
 " {{{ STRUCTURE
-call dein#add('scrooloose/nerdtree',
-      \{'on_cmd': 'NERDTreeToggle'})
-call dein#add('majutsushi/tagbar')
-call dein#add('vimlab/split-term.vim')
-call dein#add('vim-airline/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
-if empty($TMUX)==0
-  call dein#add('edkolev/tmuxline.vim')
-endif
+"call dein#add('scrooloose/nerdtree',
+"      \{'on_cmd': 'NERDTreeToggle'})
+"call dein#add('majutsushi/tagbar')
+"call dein#add('vimlab/split-term.vim')
+"call dein#add('vim-airline/vim-airline')
+"call dein#add('vim-airline/vim-airline-themes')
+"if empty($TMUX)==0
+"  call dein#add('edkolev/tmuxline.vim')
+"endif
 " }}}
 
 " {{{ NAVIGATION
-call dein#add('ctrlpvim/ctrlp.vim')
-call dein#add('Shougo/unite.vim')
-call dein#add('vim-scripts/mru.vim')
-call dein#add('jlanzarotta/bufexplorer')
-call dein#add('junegunn/fzf')
-call dein#add('junegunn/fzf.vim')
-call dein#add('junegunn/vim-peekaboo')
+"call dein#add('ctrlpvim/ctrlp.vim')
+"call dein#add('Shougo/unite.vim')
+"call dein#add('vim-scripts/mru.vim')
+"call dein#add('jlanzarotta/bufexplorer')
+"call dein#add('junegunn/fzf')
+"call dein#add('junegunn/fzf.vim')
+"call dein#add('junegunn/vim-peekaboo')
 " }}}
 
 " {{{ EDITING
 "call dein#add('Shougo/neosnippet.vim')
 "call dein#add('Shougo/neosnippet-snippets')
-call dein#add('sheerun/vim-polyglot')
-call dein#add('scrooloose/nerdcommenter')
-call dein#add('Raimondi/delimitMate')
-call dein#add('godlygeek/tabular')
-call dein#add('junegunn/vim-easy-align')
-call dein#add('easymotion/vim-easymotion')
-call dein#add('terryma/vim-multiple-cursors')
-call dein#add('bronson/vim-trailing-whitespace')
-call dein#add('tpope/vim-unimpaired')
+"call dein#add('sheerun/vim-polyglot')
+"call dein#add('scrooloose/nerdcommenter')
+"call dein#add('Raimondi/delimitMate')
+"call dein#add('godlygeek/tabular')
+"call dein#add('junegunn/vim-easy-align')
+"call dein#add('easymotion/vim-easymotion')
+"call dein#add('terryma/vim-multiple-cursors')
+"call dein#add('bronson/vim-trailing-whitespace')
+"call dein#add('tpope/vim-unimpaired')
 "call dein#add('ervandew/supertab')
-call dein#add('Yggdroot/indentLine')
-call dein#add('Valloric/MatchTagAlways')
-call dein#add('tpope/vim-surround')
-call dein#add('wellle/targets.vim')
-call dein#add('tpope/vim-repeat')
-call dein#add('junegunn/rainbow_parentheses.vim')
-call dein#add('mbbill/undotree')
-call dein#add('AndrewRadev/splitjoin.vim')
+"call dein#add('Yggdroot/indentLine')
+"call dein#add('Valloric/MatchTagAlways')
+"call dein#add('tpope/vim-surround')
+"call dein#add('wellle/targets.vim')
+"call dein#add('tpope/vim-repeat')
+"call dein#add('junegunn/rainbow_parentheses.vim')
+"call dein#add('mbbill/undotree')
+"call dein#add('AndrewRadev/splitjoin.vim')
 " }}}
 
 " {{{ HTML/JS/NODEJS/REACTJS
-call dein#add('moll/vim-node')
-call dein#add('neovim/node-host', { 'do': 'npm install --cache-min Infinity --loglevel http' })
+"call dein#add('moll/vim-node')
+"call dein#add('neovim/node-host', { 'do': 'npm install --cache-min Infinity --loglevel http' })
 
-call dein#add('othree/html5.vim')
-call dein#add('mattn/emmet-vim')
+"call dein#add('othree/html5.vim')
+"call dein#add('mattn/emmet-vim')
 
-call dein#add('pangloss/vim-javascript')
-call dein#add('mxw/vim-jsx')
-call dein#add('benjie/neomake-local-eslint.vim')
+"call dein#add('pangloss/vim-javascript')
+"call dein#add('mxw/vim-jsx')
+"call dein#add('benjie/neomake-local-eslint.vim')
 
-call dein#add('mustache/vim-mustache-handlebars')
+"call dein#add('mustache/vim-mustache-handlebars')
 
-call dein#add('flowtype/vim-flow')
+"call dein#add('flowtype/vim-flow')
 "call dein#add('sbdchd/neoformat')
 "call dein#add('prettier/vim-prettier')
-call dein#add('skywind3000/asyncrun.vim')
-call dein#add('w0rp/ale')
-call dein#add('styled-components/vim-styled-components')
+"call dein#add('skywind3000/asyncrun.vim')
+"call dein#add('w0rp/ale')
+"call dein#add('styled-components/vim-styled-components')
 
 "call dein#add('othree/yajs.vim')
 "call dein#add('othree/es.next.syntax.vim')
@@ -106,65 +452,65 @@ call dein#add('styled-components/vim-styled-components')
 " npm install -g elm
 " npm install -g elm-test
 " npm install -g elm-oracle
-call dein#add('elmcast/elm-vim')
+"call dein#add('elmcast/elm-vim')
 " }}}
 
 " {{{ C#/DOTNET
-call dein#add('OrangeT/vim-csharp')
-call dein#add('OmniSharp/omnisharp-vim')
-call dein#add('tpope/vim-dispatch')
-call dein#add('vim-scripts/dbext.vim')
+"call dein#add('OrangeT/vim-csharp')
+"call dein#add('OmniSharp/omnisharp-vim')
+"call dein#add('tpope/vim-dispatch')
+"call dein#add('vim-scripts/dbext.vim')
 " }}}
 
 " {{{ DISPLAY
-call dein#add('junegunn/goyo.vim')
-call dein#add('junegunn/limelight.vim')
-call dein#add('amix/vim-zenroom2')
-call dein#add('vim-scripts/ZoomWin')
-call dein#add('zhaocai/GoldenView.Vim')
-call dein#add('ryanoasis/vim-devicons')
-call dein#add('vim-scripts/ScrollColors')
-call dein#add('Yggdroot/indentLine')
+"call dein#add('junegunn/goyo.vim')
+"call dein#add('junegunn/limelight.vim')
+"call dein#add('amix/vim-zenroom2')
+"call dein#add('vim-scripts/ZoomWin')
+"call dein#add('zhaocai/GoldenView.Vim')
+"call dein#add('ryanoasis/vim-devicons')
+"call dein#add('vim-scripts/ScrollColors')
+"call dein#add('Yggdroot/indentLine')
 "if has("gui_running")
-  call dein#add('equalsraf/neovim-gui-shim')
+"  call dein#add('equalsraf/neovim-gui-shim')
 "endif
 " }}}
 
 " {{{ GIT
-call dein#add('tpope/vim-fugitive')
-call dein#add('airblade/vim-gitgutter')
-call dein#add('Xuyuanp/nerdtree-git-plugin')
-call dein#add('renyard/vim-git-flow-format')
-call dein#add('mhinz/vim-signify')
-call dein#add('jaxbot/github-issues.vim')
-call dein#add('junegunn/gv.vim')
-call dein#add('int3/vim-extradite')
-call dein#add('vim-scripts/gitignore')
+"call dein#add('tpope/vim-fugitive')
+"call dein#add('airblade/vim-gitgutter')
+"call dein#add('Xuyuanp/nerdtree-git-plugin')
+"call dein#add('renyard/vim-git-flow-format')
+"call dein#add('mhinz/vim-signify')
+"call dein#add('jaxbot/github-issues.vim')
+"call dein#add('junegunn/gv.vim')
+"call dein#add('int3/vim-extradite')
+"call dein#add('vim-scripts/gitignore')
 " }}}
 
 " {{{ PANDOC
-call dein#add('vim-pandoc/vim-pandoc')
-call dein#add('vim-pandoc/vim-pandoc-syntax')
+"call dein#add('vim-pandoc/vim-pandoc')
+"call dein#add('vim-pandoc/vim-pandoc-syntax')
 " }}}
 
 " {{{ THEMES
-call dein#add('freeo/vim-kalisi')
-call dein#add('bcicen/vim-vice')
-call dein#add('mhartington/oceanic-next')
-call dein#add('ayu-theme/ayu-vim')
+"call dein#add('freeo/vim-kalisi')
+"call dein#add('bcicen/vim-vice')
+"call dein#add('mhartington/oceanic-next')
+"call dein#add('ayu-theme/ayu-vim')
 "call dein#add('altercation/vim-colors-solarized')
 "call dein#add('frankier/neovim-colors-solarized-truecolor-only')
 " }}}
 
-call dein#end()
+"call dein#end()
 
 " ]]]]
 
 " [[[[ CONFIGS
 "
-filetype plugin indent on
-syntax enable
-set encoding=utf8
+"filetype plugin indent on
+"syntax enable
+"set encoding=utf8
 
 " If you want to install not installed plugins on startup.
 if dein#check_install()
@@ -778,3 +1124,4 @@ let g:ale_fixers = {
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \}
+endfunction

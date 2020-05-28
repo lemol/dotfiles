@@ -9,7 +9,7 @@ myModMask = mod4Mask
 
 myLauncher = "$(yeganesh -x -- -fn 'monospace-8' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
 
-myTerminal = "termite"
+myTerminal = "hyper"
 
 myFocusFollowsMouse = False
 
@@ -21,6 +21,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((modMask, xK_Tab),
      windows W.focusDown)
+
+  , ((modMask .|. shiftMask, xK_Tab),
+     windows W.focusUp)
 
   -- Close focused window.
   , ((modMask .|. shiftMask, xK_c),
