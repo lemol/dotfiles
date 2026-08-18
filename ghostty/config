@@ -1,0 +1,44 @@
+# ─────────────────────────────────────────────────────────────
+#  Ghostty config — read by cmux for terminal look & behaviour
+#  Reload with:  cmux reload-config
+# ─────────────────────────────────────────────────────────────
+
+# Theme (cmux inherits this when `cmux themes` is set to "inherit")
+theme = dark:TokyoNight Night,light:TokyoNight Day
+
+# Font — FiraCode Nerd Font Mono carries the powerline/devicon glyphs
+font-family = FiraCode Nerd Font Mono
+font-size = 14
+font-thicken = true
+
+# Ligatures: keep the arrows/comparisons, drop the noisy ones
+font-feature = calt
+font-feature = liga
+font-feature = -zero
+
+# A little air so text never kisses the pane edge
+window-padding-x = 12
+window-padding-y = 8
+window-padding-balance = true
+
+# Slightly looser lines read better on a retina panel
+adjust-cell-height = 12%
+
+# Cursor
+cursor-style = block
+cursor-style-blink = false
+mouse-hide-while-typing = true
+
+# Subtle depth — cmux draws its own chrome, so keep this restrained
+background-opacity = 0.96
+background-blur-radius = 20
+
+# Dim the splits you are not typing in
+unfocused-split-opacity = 0.88
+
+# Selection + scrollback
+copy-on-select = clipboard
+scrollback-limit = 10000
+
+shell-integration = zsh
+shell-integration-features = cursor,sudo,title

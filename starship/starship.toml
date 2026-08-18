@@ -1,0 +1,155 @@
+# ─────────────────────────────────────────────────────────────
+#  Starship — Tokyo Night powerline prompt
+#  The "vim-airline" of the shell. Glyphs need a Nerd Font.
+#  Edit:  $EDITOR ~/.config/starship.toml
+# ─────────────────────────────────────────────────────────────
+
+add_newline = true
+command_timeout = 1000
+palette = "tokyonight"
+
+# Left: os → directory → git  (chained powerline blocks)
+# Right: language versions, command duration, clock
+format = """
+[](fg:sky)\
+$os\
+$username\
+[](fg:sky bg:deep)\
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$nodejs$python$rust$golang$elixir$dotnet$java$docker_context\
+$cmd_duration\
+$time\
+$line_break\
+$character"""
+
+[palettes.tokyonight]
+ink   = "#1a1b26"
+sky   = "#7aa2f7"
+deep  = "#3d59a1"
+leaf  = "#9ece6a"
+slate = "#565f89"
+mist  = "#c0caf5"
+rose  = "#f7768e"
+amber = "#e0af68"
+lilac = "#bb9af7"
+flame = "#ff9e64"
+cyan  = "#7dcfff"
+
+# ── left powerline blocks ────────────────────────────────────
+
+[os]
+disabled = false
+style = "bg:sky fg:ink"
+format = '[ $symbol ]($style)'
+
+[os.symbols]
+Macos = ""
+
+[username]
+show_always = false
+style_user = "bg:sky fg:ink"
+style_root = "bg:rose fg:ink"
+format = '[$user ]($style)'
+
+[directory]
+style = "bg:deep fg:mist"
+format = '[ $path ]($style)[$read_only]($read_only_style)'
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " "
+read_only_style = "bg:deep fg:amber"
+
+[directory.substitutions]
+"Documents" = "󰈙"
+"Downloads" = ""
+"Pictures" = ""
+"Developer" = "󰲋"
+"Labs" = "󰲋"
+
+# The git segment carries its own opening + closing wedges, so the
+# whole block disappears cleanly when you are outside a repo.
+[git_branch]
+symbol = ""
+style = "bg:leaf fg:ink"
+format = '[](fg:deep bg:leaf)[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bg:leaf fg:ink"
+format = '[ $all_status$ahead_behind]($style)[](fg:leaf)'
+conflicted = "󰞇 "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count} "
+untracked = "?${count} "
+stashed = " "
+modified = "✱${count} "
+staged = "+${count} "
+renamed = "»${count} "
+deleted = "✘${count} "
+
+# ── right side: only shows what is actually there ────────────
+
+[fill]
+symbol = " "
+
+[nodejs]
+symbol = ""
+style = "fg:leaf"
+format = '[$symbol $version]($style)  '
+
+[python]
+symbol = ""
+style = "fg:amber"
+format = '[$symbol $version]($style)  '
+
+[rust]
+symbol = ""
+style = "fg:flame"
+format = '[$symbol $version]($style)  '
+
+[golang]
+symbol = ""
+style = "fg:cyan"
+format = '[$symbol $version]($style)  '
+
+[elixir]
+symbol = ""
+style = "fg:lilac"
+format = '[$symbol $version]($style)  '
+
+[dotnet]
+symbol = "󰪮"
+style = "fg:lilac"
+format = '[$symbol $tfm]($style)  '
+
+[java]
+symbol = ""
+style = "fg:rose"
+format = '[$symbol $version]($style)  '
+
+[docker_context]
+symbol = ""
+style = "fg:cyan"
+format = '[$symbol $context]($style)  '
+only_with_files = true
+
+[cmd_duration]
+min_time = 2000
+style = "fg:amber"
+format = '[󱎫 $duration]($style)  '
+
+[time]
+disabled = false
+style = "fg:slate"
+format = '[$time]($style)'
+time_format = "%H:%M"
+
+# ── prompt character ─────────────────────────────────────────
+
+[character]
+success_symbol = "[❯](bold fg:leaf)"
+error_symbol = "[❯](bold fg:rose)"
+vimcmd_symbol = "[❮](bold fg:lilac)"
