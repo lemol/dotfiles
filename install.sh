@@ -59,7 +59,15 @@ bold "Linking configs"
 link ghostty/config                       "$HOME/.config/ghostty/config"
 link starship/starship.toml               "$HOME/.config/starship.toml"
 link cmux/cmux.json                       "$HOME/.config/cmux/cmux.json"
-link nvim/lua/plugins/colorscheme.lua     "$HOME/.config/nvim/lua/plugins/colorscheme.lua"
+
+# nvim is only linked when a config already exists. Creating ~/.config/nvim
+# here would make a fresh `git clone` of the LazyVim starter fail on a
+# non-empty directory. Bootstrap LazyVim first, then re-run this script.
+if [[ -d "$HOME/.config/nvim" ]]; then
+  link nvim/lua/plugins/colorscheme.lua   "$HOME/.config/nvim/lua/plugins/colorscheme.lua"
+else
+  info "no ~/.config/nvim yet — skipping colorscheme (see README: Neovim)"
+fi
 
 # ── 3. bat theme ──────────────────────────────────────────────
 bold "Configuring bat"

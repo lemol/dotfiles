@@ -53,6 +53,35 @@ Re-running is safe. Any real file it would overwrite is moved to
 `~/.zshrc` itself is **not** symlinked — it holds machine-specific paths (nvm, gcloud,
 pnpm, bun). The installer only appends a single `source` line pointing back here.
 
+## Neovim
+
+Neovim is installed from the `Brewfile`, but **no editor config ships in this repo** —
+only `nvim/lua/plugins/colorscheme.lua`, which pins the theme to match the terminal.
+
+To set up an editor from scratch:
+
+```sh
+# LazyVim needs Neovim 0.11+
+brew upgrade neovim && nvim --version
+
+# bootstrap the LazyVim starter (must be a fresh ~/.config/nvim)
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+rm -rf ~/.config/nvim/.git
+
+# now re-run the installer to link the matching colorscheme
+./install.sh --links
+```
+
+`install.sh` deliberately **skips** the colorscheme link when `~/.config/nvim` does not
+exist — creating that directory early would make the starter's `git clone` fail on a
+non-empty target. Bootstrap first, link second.
+
+Neovim keeps state in four places; a full wipe means removing all of them:
+
+```sh
+rm -rf ~/.config/nvim ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim
+```
+
 ## Notes
 
 **cmux embeds Ghostty**, so terminal appearance is set in `ghostty/config`, not in
