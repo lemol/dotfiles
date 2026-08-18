@@ -46,7 +46,7 @@ Re-running is safe. Any real file it would overwrite is moved to
 | `ghostty/config` | `~/.config/ghostty/config` | Theme, font, padding, opacity, blur |
 | `starship/starship.toml` | `~/.config/starship.toml` | The powerline prompt |
 | `cmux/cmux.json` | `~/.config/cmux/cmux.json` | cmux app chrome and sidebar |
-| `nvim/lua/plugins/colorscheme.lua` | `~/.config/nvim/lua/plugins/colorscheme.lua` | Pins LazyVim to `tokyonight-night` |
+| `nvim/` | `~/.config/nvim` | Whole LazyVim config, incl. plugin version pins |
 | `bat/themes/*.tmTheme` | `~/.config/bat/themes/` | Tokyo Night syntax theme for `bat` and `delta` |
 | `zsh/modern.zsh` | *sourced* from `~/.zshrc` | Prompt init, `eza`/`bat`/`zoxide`/`fzf` setup |
 
@@ -55,32 +55,30 @@ pnpm, bun). The installer only appends a single `source` line pointing back here
 
 ## Neovim
 
-Neovim is installed from the `Brewfile`, but **no editor config ships in this repo** —
-only `nvim/lua/plugins/colorscheme.lua`, which pins the theme to match the terminal.
+The full Neovim config is tracked here and symlinked as a whole directory:
+`~/.config/nvim` → `dotfiles/nvim`. It is [LazyVim](https://lazyvim.org) with the
+colorscheme pinned to `tokyonight-night`, so the editor background is the exact
+`#1a1b26` the terminal uses and a split pane reads as one surface.
 
-To set up an editor from scratch:
-
-```sh
-# LazyVim needs Neovim 0.11+
-brew upgrade neovim && nvim --version
-
-# bootstrap the LazyVim starter (must be a fresh ~/.config/nvim)
-git clone https://github.com/LazyVim/starter ~/.config/nvim
-rm -rf ~/.config/nvim/.git
-
-# now re-run the installer to link the matching colorscheme
-./install.sh --links
-```
-
-`install.sh` deliberately **skips** the colorscheme link when `~/.config/nvim` does not
-exist — creating that directory early would make the starter's `git clone` fail on a
-non-empty target. Bootstrap first, link second.
-
-Neovim keeps state in four places; a full wipe means removing all of them:
+Nothing extra to bootstrap. `install.sh` links the directory, and on first launch
+`lazy.nvim` installs the plugins pinned in `lazy-lock.json` — meaning another machine
+gets the *same* plugin versions, not just the same config.
 
 ```sh
-rm -rf ~/.config/nvim ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim
+nvim        # first run installs plugins, then you're done
 ```
+
+| File | Role |
+| --- | --- |
+| `nvim/lazy-lock.json` | Exact plugin commit pins — commit this after `:Lazy update` |
+| `nvim/lazyvim.json` | Which LazyVim extras are enabled (`:LazyExtras` edits it) |
+| `nvim/lua/plugins/colorscheme.lua` | Tokyo Night pin + lualine theme |
+| `nvim/lua/config/*.lua` | Your options, keymaps, autocmds |
+
+Requires Neovim **0.11+**; the `Brewfile` installs current stable.
+
+Add language support and tooling with `:LazyExtras` inside nvim — it writes to
+`lazyvim.json`, so commit that file to carry the choice to other machines.
 
 ## Notes
 
