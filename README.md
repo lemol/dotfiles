@@ -46,6 +46,7 @@ Re-running is safe. Any real file it would overwrite is moved to
 | `ghostty/config` | `~/.config/ghostty/config` | Theme, font, padding, opacity, blur |
 | `starship/starship.toml` | `~/.config/starship.toml` | The powerline prompt |
 | `cmux/cmux.json` | `~/.config/cmux/cmux.json` | cmux app chrome and sidebar |
+| `herdr/config.toml` | `~/.config/herdr/config.toml` | Herdr agent multiplexer config (prefix: `ctrl+a`, Tokyo Night theme) |
 | `nvim/` | `~/.config/nvim` | Whole LazyVim config, incl. plugin version pins |
 | `bat/themes/*.tmTheme` | `~/.config/bat/themes/` | Tokyo Night syntax theme for `bat` and `delta` |
 | `zsh/modern.zsh` | *sourced* from `~/.zshrc` | Prompt init, `eza`/`bat`/`zoxide`/`fzf` setup |
@@ -88,8 +89,13 @@ cmux's own settings. `cmux themes` reports the theme as inherited from that file
 **Reload without restarting:**
 
 ```sh
-cmux reload-config     # reloads BOTH ghostty/config and cmux.json, refreshes terminals
+cmux reload-config          # reloads BOTH ghostty/config and cmux.json, refreshes terminals
+herdr server reload-config  # reloads herdr config.toml in running Herdr server
 ```
+
+**Herdr keybindings:**
+- Prefix key is configured to `Ctrl+a` (e.g. `Ctrl+a ?` for help, `Ctrl+a c` for new tab, `Ctrl+a q` to detach).
+
 
 **Common tweaks**
 

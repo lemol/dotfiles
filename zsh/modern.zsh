@@ -6,10 +6,11 @@
 #  Every block is guarded so a missing tool degrades quietly.
 # ═══════════════════════════════════════════════════════════════
 
-# ── Prompt: Starship. Config at ~/.config/starship.toml ────────
-if command -v starship >/dev/null 2>&1; then
-  eval "$(starship init zsh)"
-fi
+
+# ── Oh My Zsh Prompt Colors (readable git on dark background) ──
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[magenta]%}git:(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[magenta]%}) %{$fg[yellow]%}%1{✗%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[magenta]%})"
 
 # Change the cursor shape in vi normal/insert mode (oh-my-zsh vi-mode plugin)
 VI_MODE_SET_CURSOR=true

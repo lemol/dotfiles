@@ -59,6 +59,7 @@ bold "Linking configs"
 link ghostty/config                       "$HOME/.config/ghostty/config"
 link starship/starship.toml               "$HOME/.config/starship.toml"
 link cmux/cmux.json                       "$HOME/.config/cmux/cmux.json"
+link herdr/config.toml                     "$HOME/.config/herdr/config.toml"
 link nvim                                 "$HOME/.config/nvim"
 
 # ── 3. bat theme ──────────────────────────────────────────────
@@ -89,13 +90,10 @@ else
   ok "appended source line to ~/.zshrc"
 fi
 
-# Starship owns the prompt, so stop oh-my-zsh from rendering its own.
-if grep -qE '^ZSH_THEME="[^"]+"' "$ZSHRC"; then
-  cp "$ZSHRC" "$ZSHRC.pre-tokyonight"
-  sed -i '' -E 's/^ZSH_THEME="[^"]+"/ZSH_THEME=""/' "$ZSHRC"
-  ok 'ZSH_THEME set to "" (Starship renders the prompt)'
-else
-  ok "ZSH_THEME already empty or unset"
+# Ensure oh-my-zsh theme is set to robbyrussell if empty
+if grep -qE '^ZSH_THEME=""' "$ZSHRC"; then
+  sed -i '' -E 's/^ZSH_THEME=""/ZSH_THEME="robbyrussell"/' "$ZSHRC"
+  ok 'ZSH_THEME set to "robbyrussell"'
 fi
 
 # ── 5. git: delta as the diff pager ───────────────────────────
@@ -114,10 +112,14 @@ else
   warn "delta not installed — skipping git pager config"
 fi
 
-# ── 6. Reload cmux if it is running ───────────────────────────
+# ── 6. Reload running multiplexers ────────────────────────────
 if command -v cmux >/dev/null 2>&1; then
   cmux reload-config >/dev/null 2>&1 && ok "cmux config reloaded" || \
     info "cmux installed but not running — config applies on launch"
+fi
+if command -v herdr >/dev/null 2>&1; then
+  herdr server reload-config >/dev/null 2>&1 && ok "herdr config reloaded" || \
+    info "herdr installed but not running — config applies on launch"
 fi
 
 echo

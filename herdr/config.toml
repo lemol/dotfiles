@@ -1,0 +1,9 @@
+# Herdr configuration — https://herdr.dev
+# Managed in dotfiles
+
+[theme]
+name = "tokyo-night"
+
+[keys]
+# Prefix key to enter prefix mode (mapped to ctrl+a)
+prefix = "ctrl+a"

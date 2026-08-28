@@ -1,8 +1,9 @@
 # Everything the Tokyo Night terminal setup needs.
 # Install with:  brew bundle --file=Brewfile
 
-# ── the terminal itself ───────────────────────────────────────
+# ── the terminal & multiplexers ───────────────────────────────
 cask "cmux"                      # Ghostty-based terminal + AI agent workspaces
+brew "herdr"                     # terminal workspace manager for AI coding agents
 
 # ── prompt & shell tooling ────────────────────────────────────
 brew "starship"                  # the powerline prompt (vim-airline equivalent)
