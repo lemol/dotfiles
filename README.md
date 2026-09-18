@@ -24,8 +24,9 @@ cd ~/Labs/lemol/dotfiles
 ./install.sh
 ```
 
-That installs everything in the `Brewfile`, symlinks the configs, builds the `bat`
-theme cache, points `git diff` at `delta`, and hooks `zsh/modern.zsh` into `~/.zshrc`.
+That installs everything in the `Brewfile` (including `lazygit`, which LazyVim's
+`<leader>gg` needs), symlinks the configs, builds the `bat` theme cache, points
+`git diff` at `delta`, and hooks `zsh/modern.zsh` into `~/.zshrc`.
 
 Then open a new cmux tab (`⌘T`) to pick up the prompt.
 
@@ -77,6 +78,15 @@ nvim        # first run installs plugins, then you're done
 | `nvim/lua/config/*.lua` | Your options, keymaps, autocmds |
 
 Requires Neovim **0.11+**; the `Brewfile` installs current stable.
+
+`<leader>gg` opens **lazygit** in a floating window (`<leader>gG` for cwd instead of
+the git root). LazyVim registers those keymaps only when `lazygit` is on `$PATH`, so
+they silently don't exist without it — the `Brewfile` installs it. It also works
+standalone:
+
+```sh
+lazygit     # stage, commit, branch, rebase, cherry-pick from the TUI
+```
 
 Add language support and tooling with `:LazyExtras` inside nvim — it writes to
 `lazyvim.json`, so commit that file to carry the choice to other machines.

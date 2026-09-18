@@ -11,6 +11,7 @@ brew "eza"                       # ls with icons + git status
 brew "bat"                       # cat/man with syntax highlighting
 brew "zoxide"                    # `z <dir>` frecency jumping
 brew "git-delta"                 # git diff pager
+brew "lazygit"                   # git TUI; backs LazyVim's <leader>gg
 brew "fzf"                       # fuzzy finder
 brew "fd"                        # fast find, backs FZF_DEFAULT_COMMAND
 brew "ripgrep"                   # fast grep
